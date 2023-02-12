@@ -11,26 +11,49 @@
   <header>
     <div id="top_header">
       <div id="logo">
+        JustStreamIt
         <img src="" alt="" />
       </div>
       <nav>
         <ul>
-          <li class="navbar"><a href="index.html">Accueil</a></li>
-          <li class="navbar"><a href="">Catégories</a></li>
+          <li class="navbar"><a href="index.html">Home</a></li>
+          <li class="navbar"><a href="">Categories</a></li>
         </ul>
       </nav>
     </div>
     <section id="firstMovie_section">
-      <!-- Dynamic data insertion -->
-      <img id="firstMovie_img" />
-      <h1></h1>
-      <button type="button" class="" aria-label=""><i class="fas fa-info"></i>More Info</button>
-      <p id="firstMovie_summary"></p>
+      <div>
+        <!-- Dynamic data insertion -->
+        <div>
+          <h1></h1>
+          <p id="firstMovie_summary"></p>
+          <button type="button" class="selectedMovie" id="firstMovie_button" aria-label=""><i class="fas fa-info"></i>More Info</button>
+        </div>
+        <div id="firstMovie_imgBloc">
+          <img id="firstMovie_img"/>
+        </div>
+      </div>
     </section>
   </header>
   <main>
-    <!-- Dynamic insertion of categories -->
+    <div id="categories">
+      <!-- Dynamic insertion of categories -->
+    </div>
   </main>
+  <article class="close" id="modal">
+    <h2 id="modal_title"></h2>
+    <img id="modal_image" />
+    <ul id="modal_genres"></ul>
+    <p id="modal_date"></p>
+    <p id="modal_rated"></p>
+    <p id="modal_imdbScore"></p>
+    <ul id="modal_directors"></ul>
+    <ul id="modal_actors"></ul>
+    <p id="modal_duration"></p>
+    <ul id="modal_countries"></ul>
+    <p id="modal_avgVote"></p>
+    <p id="modal_description"></p>
+  </article>
   <script src="https://kit.fontawesome.com/1f7aaf7cdc.js" crossorigin="anonymous"></script>
   <script src="js/homepage.js"></script>
 </body>

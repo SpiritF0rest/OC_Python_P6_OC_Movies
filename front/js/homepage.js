@@ -1,21 +1,28 @@
+class Movie {
+  constructor(id, title, image, genres, date, rated, imdb_score, directors, actors, duration, countries, avg_vote, description){
+    this.id = id;
+    this.title = title;
+    this.image = image;
+    this.genres = genres;
+    this.date = date;
+    this.rated = rated;
+    this.imdb_score = imdb_score;
+    this.directors = directors;
+    this.actors = actors;
+    this.duration = duration;
+    this.countries = countries;
+    this.avg_vote = avg_vote;
+    this.description = description;
+  };
+};
+
+let moviesDataList = [];
 
 async function getSortedMoviesByImdbAndVotes(index){
   return fetch(`http://localhost:8000/api/v1/titles/?sort_by=-imdb_score,-votes&page=${index}`)
   .then(function(res){
-      if(res.ok){
-      return res.json();
-      };
-  })
-  .catch(function(error){
-      console.log(error);
-  });
-};
-
-async function getBestMoviesOfCategory(category, index){
-  return fetch(`http://localhost:8000/api/v1/titles/?genre=${category}&sort_by=-imdb_score,-votes&page=${index}`)
-  .then(function(res){
     if(res.ok){
-    return res.json();
+      return res.json();
     };
   })
   .catch(function(error){
@@ -23,31 +30,65 @@ async function getBestMoviesOfCategory(category, index){
   });
 };
 
-async function getMovieData(id){
-  return fetch(`http://localhost:8000/api/v1/titles/${id}`)
+async function getBestMoviesOfCategory(category, index){
+  return fetch(`http://localhost:8000/api/v1/titles/?genre=${category}&sort_by=-imdb_score,-votes&page=${index}`)
   .then(function(res){
-      if(res.ok){
+    if(res.ok){
       return res.json();
-      };
+    };
   })
   .catch(function(error){
-      console.log(error);
+    console.log(error);
+  });
+};
+
+async function fetchMovieData(id){
+  return fetch(`http://localhost:8000/api/v1/titles/${id}`)
+  .then(function(res){
+    if(res.ok){
+      return res.json();
+    };
+  })
+  .then(function(movieData){
+    let newMovie = new Movie(
+      movieData.id,
+      movieData.title,
+      movieData.image_url,
+      movieData.genres,
+      movieData.date_published,
+      movieData.rated,
+      movieData.imdb_score,
+      movieData.directors,
+      movieData.actors,
+      movieData.duration,
+      movieData.countries,
+      movieData.avg_vote,
+      movieData.description
+    );
+    moviesDataList.push(newMovie);
+    return newMovie;
+  })
+  .catch(function(error){
+    console.log(error);
   });
 };
 
 function displayTheMostPopularMovie(movie){
   const image = document.getElementById("firstMovie_img");
-  image.setAttribute("src", movie.image_url);
+  image.setAttribute("src", movie.image);
   image.setAttribute("alt", `Poster of ${movie.title}`);
   const title = document.querySelector("h1");
   title.textContent = movie.title;
   const summary = document.getElementById("firstMovie_summary");
   summary.textContent = movie.description;
+  const button = document.getElementById("firstMovie_button");
+  button.setAttribute("data-id", movie.id)
 };
 
 function displayCategorySection(movies, category){
-  const parentBloc = document.querySelector("main");
+  const parentBloc = document.getElementById("categories");
   const section = document.createElement("section");
+  section.setAttribute("class", "category_section")
   section.setAttribute("id", `${category}_section`);
   const title = document.createElement("h2");
   title.textContent = category
@@ -56,9 +97,10 @@ function displayCategorySection(movies, category){
   for (let i = 0; i <= movies.length - 1; i++) {
     const anchor = document.createElement("a");
     anchor.setAttribute("data-id", movies[i].id);
+    anchor.className = "selectedMovie";
     const image = document.createElement("img");
     image.setAttribute("src", movies[i].image_url);
-    image.setAttribute("alt", `Poster of ${movies[i].title}`);
+    image.setAttribute("alt", `Poster of ${movies[i].title} movie`);
     anchor.appendChild(image);
     div.appendChild(anchor);
   };
@@ -72,6 +114,18 @@ async function categoriesPagination(categories){
   for (let i = 0; i <= categories.length - 1; i++){
     let categoryMovies = await getMoviesList(null, getBestMoviesOfCategory, categories[i]);
     displayCategorySection(categoryMovies, categories[i]);
+  };
+};
+
+function getMovieData(movieId){
+  let selectedMovie = moviesDataList.filter(movie => movie.id == movieId);
+  if (selectedMovie.length > 0){
+    return selectedMovie[0];
+  } else {
+    let movieData = fetchMovieData(movieId)
+    console.log(movieData)
+    
+    return movieData;
   };
 };
 
@@ -94,14 +148,75 @@ async function getMoviesList(type, fetchFunction, category){
   return moviesList.slice(0,7);
 };
 
+function displayModal(movie) {
+  console.log(movie)
+  let title = document.getElementById("modal_title");
+  title.textContent = movie.title;
+  let image = document.getElementById("modal_image");
+  image.setAttribute("src", movie.image);
+  image.setAttribute("alt", `Poster of ${movie.title}`);
+  let genres = document.getElementById("modal_genres");
+  for (let i = 0; i <= movie.genres.length - 1; i++) {
+    const genre = document.createElement("li");
+    genre.textContent = movie.genres[i];
+    genres.appendChild(genre);
+  };
+  let date = document.getElementById("modal_date");
+  date.textContent = movie.date;
+  let rated = document.getElementById("modal_rated");
+  rated.textContent = movie.rated;
+  let imdb_score = document.getElementById("modal_imdbScore");
+  imdb_score.textContent = movie.imdb_score;
+  let directors = document.getElementById("modal_directors");
+  for (let i = 0; i <= movie.directors.length - 1; i++) {
+    const director = document.createElement("li");
+    director.textContent = movie.directors[i];
+    directors.appendChild(director);
+  };
+  let actors = document.getElementById("modal_actors");
+  for (let i = 0; i <= movie.actors.length - 1; i++) {
+    const actor = document.createElement("li");
+    actor.textContent = movie.actors[i];
+    actors.appendChild(actor);
+  };
+  let duration = document.getElementById("modal_duration");
+  duration.textContent = movie.duration;
+  let countries = document.getElementById("modal_countries");
+  for (let i = 0; i <= movie.countries.length - 1; i++) {
+    const country = document.createElement("li");
+    country.textContent = movie.countries[i];
+    countries.appendChild(country);
+  };
+  let avg_vote = document.getElementById("modal_avgVote");
+  avg_vote.textContent = movie.avg_vote;
+  let description = document.getElementById("modal_description");
+  description.textContent = movie.description;
+};
+
+function selectedMovie() {
+  let allMoviesTarget = document.getElementsByClassName("selectedMovie");
+  console.log(allMoviesTarget)
+  let modal = document.getElementById("modal");
+  for (let target of allMoviesTarget) {
+    let targetId = target.getAttribute("data-id");
+    target.addEventListener("click", function (e) {
+      let targetMovie = getMovieData(targetId);
+      displayModal(targetMovie);
+      modal.className = "open";
+    });
+  };
+};
+
 async function main(){
   let chosenCategories = ["Fantasy", "Sci-Fi", "Horror"];
   let sortedMoviesByImdbAndVotes = await getSortedMoviesByImdbAndVotes(1);
   const theMostPopularMovie = await getMovieData(sortedMoviesByImdbAndVotes["results"][0]["id"]);
   const mostPopularMovies = await getMoviesList("popular", getSortedMoviesByImdbAndVotes, null);
+  categoriesPagination(chosenCategories);
   displayTheMostPopularMovie(theMostPopularMovie);
   displayCategorySection(mostPopularMovies, "Top rated movies");
-  categoriesPagination(chosenCategories);
+  //categoriesPagination(chosenCategories);
+  selectedMovie();
 };
 
 main();

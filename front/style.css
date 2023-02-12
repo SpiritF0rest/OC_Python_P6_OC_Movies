@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
 /* minireset css */
 html, body, p, ul, li, h1, h2, h3 {
   margin: 0;
@@ -33,13 +35,122 @@ img {
 body {
   background-color: #141414;
   color: #fff;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+header, main {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+header {
+  height: 50vh;
+  display: grid;
+  grid-template-rows: 1fr 3fr;
 }
 
 #top_header {
+  padding: 1rem 0;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: start;
 }
+
+#logo {
+  padding-left: 2rem;
+  font-size: 2rem;
+}
+
+nav {
+  width: 100%;
+}
+
 nav ul {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  padding-right: 1rem;
+}
+
+.navbar {
+  padding: 0 1rem;
+  font-size: 1.6rem;
+}
+
+.navbar:hover {
+  font-weight: bold;
+}
+
+#firstMovie_section {
+  margin: 0 auto;
+}
+
+#firstMovie_section > div {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+#firstMovie_section > div > div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+}
+
+#firstMovie_section > div > div > h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0 0 1.5rem 0 ;
+}
+
+#firstMovie_section > div > div > p {
+  padding: 0 0 1.5rem 0 ;
+  text-align: justify;
+}
+
+#firstMovie_section > div > div > button {
+  padding: 0.5rem;
+  opacity: 80%;
+}
+
+#firstMovie_section > div > div > button:hover {
+  opacity: 100%;
+}
+
+#firstMovie_section > div > div > button > i {
+  padding: 0 0.5rem 0 0;
+}
+
+#firstMovie_imgBloc {
+  position: relative;
+  flex: 1;
+}
+
+#firstMovie_imgBloc > img {
+  position: absolute;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+}
+
+#categories {
+  height: 100%;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+}
+
+#categories > section > h2 {
+  margin: 2rem 0 1rem 0;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+#categories > section > div > a {
+  padding: 0 0.3rem 0 0;
 }
