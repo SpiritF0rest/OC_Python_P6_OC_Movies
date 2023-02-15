@@ -27,7 +27,7 @@
         <div>
           <h1></h1>
           <p id="firstMovie_summary"></p>
-          <button type="button" class="selectedMovie" id="firstMovie_button" aria-label=""><i class="fas fa-info"></i>More Info</button>
+          <button type="button" class="selectedMovie" id="firstMovie_button" aria-label="more info button"><i class="fas fa-info"></i>More Info</button>
         </div>
         <div id="firstMovie_imgBloc">
           <img id="firstMovie_img"/>
@@ -41,18 +41,27 @@
     </div>
   </main>
   <article class="close" id="modal">
-    <h2 id="modal_title"></h2>
-    <img id="modal_image" />
-    <ul id="modal_genres"></ul>
-    <p id="modal_date"></p>
-    <p id="modal_rated"></p>
-    <p id="modal_imdbScore"></p>
-    <ul id="modal_directors"></ul>
-    <ul id="modal_actors"></ul>
-    <p id="modal_duration"></p>
-    <ul id="modal_countries"></ul>
-    <p id="modal_avgVote"></p>
-    <p id="modal_description"></p>
+    <button type="button" id="close_modal" aria-label="close modal button">x</button>
+    <div class="modal_info">
+      <h2 id="modal_title"></h2>
+      <ul id="modal_genres"></ul>
+      <p id="modal_date"></p>
+      <p id="modal_rated"></p>
+      <p id="modal_imdbScore"></p>
+      <p id="modal_duration"></p>
+      <ul id="modal_countries"></ul>
+      <p id="modal_avgVote"></p>
+    </div>
+    <div class="modal_img">
+      <img id="modal_image" />
+    </div>
+    <div class="modal_staff">
+      <ul id="modal_directors"></ul>
+      <ul id="modal_actors"></ul>
+    </div>
+    <div class="modal_summary">
+      <p id="modal_description"></p>
+    </div>
   </article>
   <script src="https://kit.fontawesome.com/1f7aaf7cdc.js" crossorigin="anonymous"></script>
   <script src="js/homepage.js"></script>

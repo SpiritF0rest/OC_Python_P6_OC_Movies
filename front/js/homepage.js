@@ -91,9 +91,24 @@ function displayCategorySection(movies, category){
   section.setAttribute("class", "category_section")
   section.setAttribute("id", `${category}_section`);
   const title = document.createElement("h2");
-  title.textContent = category
+  title.textContent = category;
   const div = document.createElement("div");
+  div.className = "category_carousel";
   div.setAttribute("id", `${category}_carousel`);
+  const previousButton = document.createElement("button");
+  previousButton.textContent = "\u2039"
+  previousButton.setAttribute("type", "button");
+  previousButton.setAttribute("id", "previous_arrow");
+  previousButton.className = "carousel_arrow";
+  div.appendChild(previousButton);
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "\u203A"
+  nextButton.setAttribute("type", "button");
+  nextButton.setAttribute("id", "next_arrow");
+  nextButton.className = "carousel_arrow";
+  div.appendChild(nextButton);
+  const slidesContainer = document.createElement("div");
+  slidesContainer.className = "slides_container"
   for (let i = 0; i <= movies.length - 1; i++) {
     const anchor = document.createElement("a");
     anchor.setAttribute("data-id", movies[i].id);
@@ -102,8 +117,9 @@ function displayCategorySection(movies, category){
     image.setAttribute("src", movies[i].image_url);
     image.setAttribute("alt", `Poster of ${movies[i].title} movie`);
     anchor.appendChild(image);
-    div.appendChild(anchor);
+    slidesContainer.appendChild(anchor);
   };
+  div.appendChild(slidesContainer)
   section.appendChild(title);
   section.appendChild(div);
   parentBloc.appendChild(section);
@@ -117,15 +133,14 @@ async function categoriesPagination(categories){
   };
 };
 
-function getMovieData(movieId){
+async function getMovieData(movieId){
   let selectedMovie = moviesDataList.filter(movie => movie.id == movieId);
   if (selectedMovie.length > 0){
     return selectedMovie[0];
   } else {
-    let movieData = fetchMovieData(movieId)
-    console.log(movieData)
-    
-    return movieData;
+    await fetchMovieData(movieId)
+    selectedMovie = moviesDataList.filter(movie => movie.id == movieId);
+    return selectedMovie[0];
   };
 };
 
@@ -148,14 +163,20 @@ async function getMoviesList(type, fetchFunction, category){
   return moviesList.slice(0,7);
 };
 
+function removeAllChildrenDOM(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  };
+};
+
 function displayModal(movie) {
-  console.log(movie)
   let title = document.getElementById("modal_title");
   title.textContent = movie.title;
   let image = document.getElementById("modal_image");
   image.setAttribute("src", movie.image);
   image.setAttribute("alt", `Poster of ${movie.title}`);
   let genres = document.getElementById("modal_genres");
+  removeAllChildrenDOM(genres);
   for (let i = 0; i <= movie.genres.length - 1; i++) {
     const genre = document.createElement("li");
     genre.textContent = movie.genres[i];
@@ -168,12 +189,14 @@ function displayModal(movie) {
   let imdb_score = document.getElementById("modal_imdbScore");
   imdb_score.textContent = movie.imdb_score;
   let directors = document.getElementById("modal_directors");
+  removeAllChildrenDOM(directors);
   for (let i = 0; i <= movie.directors.length - 1; i++) {
     const director = document.createElement("li");
     director.textContent = movie.directors[i];
     directors.appendChild(director);
   };
   let actors = document.getElementById("modal_actors");
+  removeAllChildrenDOM(actors);
   for (let i = 0; i <= movie.actors.length - 1; i++) {
     const actor = document.createElement("li");
     actor.textContent = movie.actors[i];
@@ -182,6 +205,7 @@ function displayModal(movie) {
   let duration = document.getElementById("modal_duration");
   duration.textContent = movie.duration;
   let countries = document.getElementById("modal_countries");
+  removeAllChildrenDOM(countries);
   for (let i = 0; i <= movie.countries.length - 1; i++) {
     const country = document.createElement("li");
     country.textContent = movie.countries[i];
@@ -195,14 +219,34 @@ function displayModal(movie) {
 
 function selectedMovie() {
   let allMoviesTarget = document.getElementsByClassName("selectedMovie");
-  console.log(allMoviesTarget)
   let modal = document.getElementById("modal");
   for (let target of allMoviesTarget) {
     let targetId = target.getAttribute("data-id");
-    target.addEventListener("click", function (e) {
-      let targetMovie = getMovieData(targetId);
+    target.addEventListener("click", async function (e) {
+      let targetMovie = await getMovieData(targetId);
       displayModal(targetMovie);
       modal.className = "open";
+    });
+  };
+};
+
+function closeModal() {
+  let modalCloseButton = document.getElementById("close_modal");
+  modalCloseButton.addEventListener("click", function (e) {
+    let modal = document.getElementById("modal");
+    modal.className = "close";
+    });
+};
+
+function carouselButtonAction(){
+  let allButtons = document.getElementsByClassName("carousel_arrow");
+  for (let button of allButtons) {
+    let buttonId = button.getAttribute("id");
+    let container = button.closest("div");
+    const slide = document.querySelector(".slides_container > a");
+    button.addEventListener("click", function (e) {
+      const slideWidth =  slide.clientWidth;
+      buttonId == "previous_arrow" ? container.scrollLeft += slideWidth : container.scrollLeft += slideWidth;
     });
   };
 };
@@ -212,11 +256,12 @@ async function main(){
   let sortedMoviesByImdbAndVotes = await getSortedMoviesByImdbAndVotes(1);
   const theMostPopularMovie = await getMovieData(sortedMoviesByImdbAndVotes["results"][0]["id"]);
   const mostPopularMovies = await getMoviesList("popular", getSortedMoviesByImdbAndVotes, null);
-  categoriesPagination(chosenCategories);
   displayTheMostPopularMovie(theMostPopularMovie);
   displayCategorySection(mostPopularMovies, "Top rated movies");
-  //categoriesPagination(chosenCategories);
+  await categoriesPagination(chosenCategories);
   selectedMovie();
+  closeModal();
+  carouselButtonAction();
 };
 
 main();
