@@ -25,6 +25,7 @@ a:visited {
 
 button {
   margin: 0;
+  border: none;
 }
 
 img {
@@ -115,6 +116,7 @@ nav ul {
 #firstMovie_button {
   padding: 0.5rem;
   opacity: 80%;
+  border-radius: 0.3rem 0.3rem;
 }
 
 #firstMovie_button:hover {
@@ -149,13 +151,13 @@ nav ul {
   text-align: center;
 }
 
-/*#categories > section > div > a {
-  padding: 0 0.3rem 0 0;
-}*/
+.category_section {
+  position: relative;
+}
 
 .category_carousel {
   overflow: hidden;
-  position: relative;
+  display: flex;
 }
 
 .slides_container {
@@ -166,7 +168,7 @@ nav ul {
 .carousel_arrow {
   position: absolute;
   display: flex;
-  top: 0;
+  top: 4rem;
   bottom: 0;
   margin: auto;
   height: 4rem;
@@ -180,8 +182,7 @@ nav ul {
   transition: opacity 100ms;
 }
 
-.carousel_arrow:hover,
-.carousel_arrow:focus {
+.carousel_arrow:hover {
   opacity: 1;
 }
 
@@ -203,6 +204,11 @@ nav ul {
   flex: 1 0 25%;
 }
 
+.slides_container > a > img {
+  display: block;
+  margin: auto;
+}
+
 .close {
   display: none;
 }
@@ -217,6 +223,45 @@ nav ul {
   top: 50%;
   transform: translate(-50%, -50%);
   max-width: 1400px;
-  width: 70%;
-  height: 70%;
+  width: 65%;
+  border-radius: 1rem 1rem;
+}
+
+#modal_content {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+#close_modal {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0.5rem;
+  width: 1.125rem;
+  border-radius: 50%;
+}
+
+#modal_title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding-bottom: 0.3rem;
+}
+
+.modal_summary {
+  padding: 1rem 2rem 0 0;
+}
+
+.modal_staff {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.modal_staff > div {
+  padding: 0 1rem 0 0;
+}
+
+.modal_staff > div > h3, #more_actors{
+  color: #787878;
 }

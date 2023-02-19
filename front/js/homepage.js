@@ -101,12 +101,6 @@ function displayCategorySection(movies, category){
   previousButton.setAttribute("id", "previous_arrow");
   previousButton.className = "carousel_arrow";
   div.appendChild(previousButton);
-  const nextButton = document.createElement("button");
-  nextButton.textContent = "\u203A"
-  nextButton.setAttribute("type", "button");
-  nextButton.setAttribute("id", "next_arrow");
-  nextButton.className = "carousel_arrow";
-  div.appendChild(nextButton);
   const slidesContainer = document.createElement("div");
   slidesContainer.className = "slides_container"
   for (let i = 0; i <= movies.length - 1; i++) {
@@ -120,6 +114,12 @@ function displayCategorySection(movies, category){
     slidesContainer.appendChild(anchor);
   };
   div.appendChild(slidesContainer)
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "\u203A"
+  nextButton.setAttribute("type", "button");
+  nextButton.setAttribute("id", "next_arrow");
+  nextButton.className = "carousel_arrow";
+  div.appendChild(nextButton);
   section.appendChild(title);
   section.appendChild(div);
   parentBloc.appendChild(section);
@@ -187,7 +187,7 @@ function displayModal(movie) {
   let rated = document.getElementById("modal_rated");
   rated.textContent = movie.rated;
   let imdb_score = document.getElementById("modal_imdbScore");
-  imdb_score.textContent = movie.imdb_score;
+  imdb_score.textContent = `Imdb score: ${movie.imdb_score}`;
   let directors = document.getElementById("modal_directors");
   removeAllChildrenDOM(directors);
   for (let i = 0; i <= movie.directors.length - 1; i++) {
@@ -197,13 +197,20 @@ function displayModal(movie) {
   };
   let actors = document.getElementById("modal_actors");
   removeAllChildrenDOM(actors);
-  for (let i = 0; i <= movie.actors.length - 1; i++) {
-    const actor = document.createElement("li");
-    actor.textContent = movie.actors[i];
-    actors.appendChild(actor);
+  for (let i = 0; i <= movie.actors.slice(0, 5).length - 1; i++) {
+    if (i == 4) {
+      const more = document.createElement("li");
+      more.textContent = "more";
+      more.setAttribute("id", "more_actors")
+      actors.appendChild(more);
+    } else {
+      const actor = document.createElement("li");
+      actor.textContent = `- ${movie.actors[i]}`;
+      actors.appendChild(actor);
+    }
   };
   let duration = document.getElementById("modal_duration");
-  duration.textContent = movie.duration;
+  duration.textContent = `${movie.duration} min`;
   let countries = document.getElementById("modal_countries");
   removeAllChildrenDOM(countries);
   for (let i = 0; i <= movie.countries.length - 1; i++) {
@@ -212,7 +219,7 @@ function displayModal(movie) {
     countries.appendChild(country);
   };
   let avg_vote = document.getElementById("modal_avgVote");
-  avg_vote.textContent = movie.avg_vote;
+  avg_vote.textContent = `Avg vote: ${movie.avg_vote}`;
   let description = document.getElementById("modal_description");
   description.textContent = movie.description;
 };
@@ -246,7 +253,7 @@ function carouselButtonAction(){
     const slide = document.querySelector(".slides_container > a");
     button.addEventListener("click", function (e) {
       const slideWidth =  slide.clientWidth;
-      buttonId == "previous_arrow" ? container.scrollLeft += slideWidth : container.scrollLeft += slideWidth;
+      buttonId == "previous_arrow" ? container.scrollLeft -= slideWidth : container.scrollLeft += slideWidth;
     });
   };
 };

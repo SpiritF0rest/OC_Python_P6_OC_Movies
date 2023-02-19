@@ -12,12 +12,11 @@
     <div id="top_header">
       <div id="logo">
         JustStreamIt
-        <img src="" alt="" />
       </div>
       <nav>
         <ul>
           <li class="navbar"><a href="index.html">Home</a></li>
-          <li class="navbar"><a href="">Categories</a></li>
+          <li class="navbar"><a href="#categories">Categories</a></li>
         </ul>
       </nav>
     </div>
@@ -41,26 +40,34 @@
     </div>
   </main>
   <article class="close" id="modal">
-    <button type="button" id="close_modal" aria-label="close modal button">x</button>
-    <div class="modal_info">
-      <h2 id="modal_title"></h2>
-      <ul id="modal_genres"></ul>
-      <p id="modal_date"></p>
-      <p id="modal_rated"></p>
-      <p id="modal_imdbScore"></p>
-      <p id="modal_duration"></p>
-      <ul id="modal_countries"></ul>
-      <p id="modal_avgVote"></p>
-    </div>
-    <div class="modal_img">
-      <img id="modal_image" />
-    </div>
-    <div class="modal_staff">
-      <ul id="modal_directors"></ul>
-      <ul id="modal_actors"></ul>
-    </div>
-    <div class="modal_summary">
-      <p id="modal_description"></p>
+    <button type="button" id="close_modal" aria-label="close modal button"><i class="fas fa-times"></i></button>
+    <div id="modal_content">
+      <div class="modal_info">
+        <h2 id="modal_title"></h2>
+        <ul id="modal_genres"></ul>
+        <p id="modal_date"></p>
+        <p id="modal_rated"></p>
+        <p id="modal_imdbScore"></p>
+        <p id="modal_duration"></p>
+        <ul id="modal_countries"></ul>
+        <p id="modal_avgVote"></p>
+      </div>
+      <div class="modal_img">
+        <img id="modal_image" />
+      </div>
+      <div class="modal_summary">
+        <p id="modal_description"></p>
+      </div>
+      <div class="modal_staff">
+        <div>
+          <h3>Directors:</h3>
+          <ul id="modal_directors"></ul>
+        </div>
+        <div>
+          <h3>Actors:</h3>
+          <ul id="modal_actors"></ul>
+        </div>
+      </div>
     </div>
   </article>
   <script src="https://kit.fontawesome.com/1f7aaf7cdc.js" crossorigin="anonymous"></script>
