@@ -17,6 +17,7 @@ ul {
 
 a {
   text-decoration: none;
+  color: #fff
 }
 
 a:visited {
@@ -225,6 +226,10 @@ nav ul {
   max-width: 1400px;
   width: 65%;
   border-radius: 1rem 1rem;
+}
+
+.open_modal {
+  opacity: 10%;
 }
 
 #modal_content {

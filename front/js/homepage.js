@@ -245,21 +245,29 @@ function displayModal(movie) {
 function selectedMovie() {
   let allMoviesTarget = document.getElementsByClassName("selectedMovie");
   let modal = document.getElementById("modal");
+  const headerTag = document.querySelector("header");
+  const mainTag = document.querySelector("main");
   for (let target of allMoviesTarget) {
     let targetId = target.getAttribute("data-id");
     target.addEventListener("click", async function (e) {
       let targetMovie = await getMovieData(targetId);
       displayModal(targetMovie);
+      headerTag.className = "open_modal";
+      mainTag.className = "open_modal";
       modal.className = "open";
     });
   };
 };
 
 function closeModal() {
+  const headerTag = document.querySelector("header");
+  const mainTag = document.querySelector("main");
   let modalCloseButton = document.getElementById("close_modal");
   modalCloseButton.addEventListener("click", function (e) {
     let modal = document.getElementById("modal");
     modal.className = "close";
+    headerTag.removeAttribute("class");
+    mainTag.removeAttribute("class")
     });
 };
 
