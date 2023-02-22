@@ -186,13 +186,13 @@ nav ul {
   opacity: 1;
 }
 
-#previous_arrow {
+.previous_arrow {
   left: 0;
   padding-left: 0.25rem;
   border-radius: 0 2rem 2rem 0;
 }
 
-#next_arrow {
+.next_arrow {
   right: 0;
   padding-left: 0.75rem;
   border-radius: 2rem 0 0 2rem;

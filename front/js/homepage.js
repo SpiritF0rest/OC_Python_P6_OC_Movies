@@ -89,17 +89,15 @@ function displayCategorySection(movies, category){
   const parentBloc = document.getElementById("categories");
   const section = document.createElement("section");
   section.setAttribute("class", "category_section")
-  section.setAttribute("id", `${category}_section`);
   const title = document.createElement("h2");
   title.textContent = category;
   const div = document.createElement("div");
   div.className = "category_carousel";
-  div.setAttribute("id", `${category}_carousel`);
   const previousButton = document.createElement("button");
   previousButton.textContent = "\u2039"
   previousButton.setAttribute("type", "button");
-  previousButton.setAttribute("id", "previous_arrow");
-  previousButton.className = "carousel_arrow";
+  //previousButton.setAttribute("id", "previous_arrow");
+  previousButton.className = "carousel_arrow previous_arrow";
   div.appendChild(previousButton);
   const slidesContainer = document.createElement("div");
   slidesContainer.className = "slides_container"
@@ -117,8 +115,8 @@ function displayCategorySection(movies, category){
   const nextButton = document.createElement("button");
   nextButton.textContent = "\u203A"
   nextButton.setAttribute("type", "button");
-  nextButton.setAttribute("id", "next_arrow");
-  nextButton.className = "carousel_arrow";
+  //nextButton.setAttribute("id", "next_arrow");
+  nextButton.className = "carousel_arrow next_arrow";
   div.appendChild(nextButton);
   section.appendChild(title);
   section.appendChild(div);
@@ -126,6 +124,10 @@ function displayCategorySection(movies, category){
   return;
 }
 
+/**
+ * Get data of categories movies list and do display
+ * @param {string} categories 
+ */
 async function categoriesPagination(categories){
   for (let i = 0; i <= categories.length - 1; i++){
     let categoryMovies = await getMoviesList(null, getBestMoviesOfCategory, categories[i]);
@@ -133,6 +135,11 @@ async function categoriesPagination(categories){
   };
 };
 
+/**
+ * Get all data of a movie to display modal
+ * @param {string} movieId 
+ * @returns data of selected movie
+ */
 async function getMovieData(movieId){
   let selectedMovie = moviesDataList.filter(movie => movie.id == movieId);
   if (selectedMovie.length > 0){
@@ -144,6 +151,13 @@ async function getMovieData(movieId){
   };
 };
 
+/**
+ * Get the 7 movies of a category
+ * @param {string} type 
+ * @param {function} fetchFunction 
+ * @param {string} category 
+ * @returns a list with the first 7 movies of a category
+ */
 async function getMoviesList(type, fetchFunction, category){
   let moviesList = [];
   let i = 1;
@@ -163,6 +177,10 @@ async function getMoviesList(type, fetchFunction, category){
   return moviesList.slice(0,7);
 };
 
+/**
+ * To empty the html lists (ul) of the modal
+ * @param {*} parent 
+ */
 function removeAllChildrenDOM(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
@@ -248,12 +266,12 @@ function closeModal() {
 function carouselButtonAction(){
   let allButtons = document.getElementsByClassName("carousel_arrow");
   for (let button of allButtons) {
-    let buttonId = button.getAttribute("id");
+    let buttonDirection = button.getAttribute("class");
     let container = button.closest("div");
     const slide = document.querySelector(".slides_container > a");
     button.addEventListener("click", function (e) {
       const slideWidth =  slide.clientWidth;
-      buttonId == "previous_arrow" ? container.scrollLeft -= slideWidth : container.scrollLeft += slideWidth;
+      buttonDirection == "carousel_arrow previous_arrow" ? container.scrollLeft -= slideWidth : container.scrollLeft += slideWidth;
     });
   };
 };
