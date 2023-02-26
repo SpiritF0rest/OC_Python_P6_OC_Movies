@@ -25,38 +25,24 @@ Prerequisites: Python
 ***
 In your directory for the project:
 
+Backend:
+```
+Clone repository from:
+- https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR
+Install it with the README of this API project.
+```
+
+Frontend:
+```
 Clone repository from : 
 - https://github.com/SpiritF0rest/OC_Python_P6_OC_Movies
-
-#### :wrench: Virtual environment creation and use :wrench:
-
-```
-In terminal from cloned folder :
-$ cd OCMovies-API-EN-FR-master
-
-To create virtual env: 
-$ python3 -m venv env
-
-To active the virtual environment:
-$ source env/bin/activate
-
-To install dependencies:
-$ pip install -r requirements.txt
-
-To create database:
-$ python manage.py create_db
-
-To run server:
-$ python manage.py runserver
-
-To deactive the virtual environment: 
-$ deactivate
 ```
 
 #### :wrench: Run front part :wrench:
 
 ```
-With your favorite editor (VSCode), use live server extension en click Go Live
+After starting the backend server:
+Open index.html in your browser.
 ```
 
 #### :mag_right: To check HTML with W3C Validator html :mag_right:
