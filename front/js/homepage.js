@@ -96,7 +96,6 @@ function displayCategorySection(movies, category){
   const previousButton = document.createElement("button");
   previousButton.textContent = "\u2039"
   previousButton.setAttribute("type", "button");
-  //previousButton.setAttribute("id", "previous_arrow");
   previousButton.className = "carousel_arrow previous_arrow";
   div.appendChild(previousButton);
   const slidesContainer = document.createElement("div");
@@ -115,7 +114,6 @@ function displayCategorySection(movies, category){
   const nextButton = document.createElement("button");
   nextButton.textContent = "\u203A"
   nextButton.setAttribute("type", "button");
-  //nextButton.setAttribute("id", "next_arrow");
   nextButton.className = "carousel_arrow next_arrow";
   div.appendChild(nextButton);
   section.appendChild(title);
